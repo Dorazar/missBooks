@@ -1,13 +1,17 @@
-export function BookList({books}) {
-    
+import { BookPreview } from './BookPreview.jsx'
 
-
-    return (
-
-    <ul>
-      {books.map((book) => (
-        <li key={book.id}>{book.title}</li>
-      ))}
-    </ul>
-    )
+export function BookList({ books, onSelectBook }) {
+  return (
+    <article>
+      <ul>
+        {books.map((book) => (
+          <li key={book.id}>
+            <BookPreview book={book} />
+            {/* prettier-ignore */}
+            <button onClick={()=>onSelectBook(book.id)}>Details</button>
+          </li>
+        ))}
+      </ul>
+    </article>
+  )
 }
