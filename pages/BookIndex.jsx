@@ -8,16 +8,21 @@ const { useRef, useEffect, useState, Fragment } = React
 export function BookIndex() {
   const [books, setBooks] = useState(null)
   const [selecedtBookId, setSelecedtBookId] = useState(null)
+  const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
 
   useEffect(() => {
     loadBooks()
-  }, [])
+  }, [filterBy])
 
   function loadBooks() {
-    bookService.query({}).then((books) => {
+    bookService.query(filterBy).then((books) => {
       setBooks(books)
       console.log(books)
     })
+  }
+
+  function onSetFilter(filterBy) {
+    setFilterBy((prevFilter) => ({ ...prevFilter, filterBy }))
   }
 
   function onSelectBook(bookId) {
@@ -32,7 +37,7 @@ export function BookIndex() {
 
       {!selecedtBookId && (
         <section>
-          <BookFilter />
+          <BookFilter defaultFilter={filterBy} onSetFilter={onSetFilter} />
           <BookList books={books} onSelectBook={onSelectBook} />
         </section>
       )}
