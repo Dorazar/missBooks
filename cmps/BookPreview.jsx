@@ -1,13 +1,10 @@
 export function BookPreview({ book }) {
   return (
-    <React.Fragment>
-      <article>
-        <div>{book.title}</div>
-        <div>
-          {book.listPrice.amount}
-          {book.listPrice.currencyCode}
-        </div>
-      </article>
-    </React.Fragment>
+    <article className="book-preview">
+      <h4>{book.title}</h4>
+
+      {book.listPrice.amount}
+      {book.listPrice.currencyCode}
+    </article>
   )
 }

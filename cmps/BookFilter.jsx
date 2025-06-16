@@ -20,16 +20,18 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
   // console.log(filterByToEdit)
 
   return (
-    <form>
-      <label htmlFor="txt" name="txt">
-        Title
-      </label>
-      <input onChange={handelChange} value={title} type="text" name="title" />
+    <section className="book-filter">
+      <form>
+        <label htmlFor="txt" name="txt">
+          Title
+        </label>
+        <input onChange={handelChange} value={title} type="text" name="title" />
 
-      <label htmlFor="amount" name="amount">
-        amount
-      </label>
-      <input onChange={handelChange} value={amount} type="number" name="amount" />
-    </form>
+        <label htmlFor="amount" name="amount">
+          amount
+        </label>
+        <input onChange={handelChange} value={amount} type="number" name="amount" />
+      </form>
+    </section>
   )
 }

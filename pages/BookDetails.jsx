@@ -20,10 +20,10 @@ export function BookDetails({ bookId, onBack }) {
 if (!book) return <div>Loading...</div>
 
   return (
-    <article>
-      <div>Title:{book.title}</div>
-      <div>Price:{book.listPrice.amount}</div>
+    <section className="book-details">
+      <h1>{book.title}</h1>
+      <h5>Price:{book.listPrice.amount}</h5>
       <button onClick={() => onBack(null)}>back</button>
-    </article>
+    </section>
   )
 }
