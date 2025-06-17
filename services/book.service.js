@@ -57,8 +57,7 @@ function getDefaultFilter() {
 }
 
 function _createBooks() {
-  let books = loadFromStorage(BOOK_KEY)
-
+  let books = loadFromStorage(BOOK_KEY) || null
   if (!books || !books.length) {
     const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
     const books = []

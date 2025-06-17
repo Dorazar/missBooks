@@ -1,6 +1,6 @@
+import { bookService } from '../services/book.service.js'
 import { BookFilter } from '../cmps/BookFilter.jsx'
 import { BookList } from '../cmps/BookList.jsx'
-import { bookService } from '../services/book.service.js'
 import { BookDetails } from './BookDetails.jsx'
 
 const { useRef, useEffect, useState, Fragment } = React
