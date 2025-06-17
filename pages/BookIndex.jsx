@@ -7,7 +7,7 @@ const { useRef, useEffect, useState, Fragment } = React
 
 export function BookIndex() {
   const [books, setBooks] = useState(null)
-  const [selecedtBookId, setSelecedtBookId] = useState(null)
+  const [selecedtBookId, setSelecedtBookId] = useState('iNJ1Ua')
   const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
 
   useEffect(() => {
