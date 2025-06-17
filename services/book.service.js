@@ -9,7 +9,7 @@ export const bookService = {
   get,
   remove,
   save,
-  getEmptyBook,
+  // getEmptyBook,
   getDefaultFilter,
 }
 
@@ -23,6 +23,7 @@ function query(filterBy = {}) {
       console.log(filterBy.amount)
       books = books.filter((book) => Number(book.listPrice.amount) >= Number(filterBy.amount))
     }
+    console.log(books)
     return books
   })
 }
@@ -44,12 +45,12 @@ function save(book) {
   }
 }
 
-function getEmptyBook(title = '', listPrice = { amount: '', currencyCode: '', isOnSale: '' }) {
-  return {
-    title,
-    listPrice,
-  }
-}
+// function getEmptyBook(title = '', listPrice = { amount: '', currencyCode: '', isOnSale: '' }) {
+//   return {
+//     title,
+//     listPrice,
+//   }
+// }
 
 function getDefaultFilter() {
   return { title: '', amount: 0 }
@@ -57,19 +58,36 @@ function getDefaultFilter() {
 
 function _createBooks() {
   let books = loadFromStorage(BOOK_KEY)
+
   if (!books || !books.length) {
-    books = [
-      _createBook('haary potter', { amount: 50, currencyCode: 'usd', isOnSale: true }),
-      _createBook('batman', { amount: 120, currencyCode: 'usd', isOnSale: true }),
-      _createBook('wolverine', { amount: 150, currencyCode: 'usd', isOnSale: true }),
-      _createBook('hulk', { amount: 140, currencyCode: 'usd', isOnSale: true }),
-    ]
-    saveToStorage(BOOK_KEY, books)
+    const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
+    const books = []
+    for (let i = 0; i < 20; i++) {
+      const book = {
+        id: utilService.makeId(),
+        title: utilService.makeLorem(2),
+        subtitle: utilService.makeLorem(4),
+        authors: [utilService.makeLorem(1)],
+        publishedDate: utilService.getRandomIntInclusive(1950, 2024),
+        description: utilService.makeLorem(20),
+        pageCount: utilService.getRandomIntInclusive(20, 600),
+        categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
+        thumbnail: `http://coding-academy.org/books-photos/${i + 1}.jpg`,
+        language: 'en',
+        listPrice: {
+          amount: utilService.getRandomIntInclusive(80, 500),
+          currencyCode: 'EUR',
+          isOnSale: Math.random() > 0.7,
+        },
+      }
+      books.push(book)
+    }
   }
+  saveToStorage(BOOK_KEY, books)
 }
 
-function _createBook(title, listPrice) {
-  const book = getEmptyBook(title, listPrice)
-  book.id = makeId()
-  return book
-}
+// function _createBook(title, listPrice) {
+//   const book = getEmptyBook(title, listPrice)
+//   book.id = makeId()
+//   return book
+// }

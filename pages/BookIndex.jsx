@@ -17,7 +17,6 @@ export function BookIndex() {
   function loadBooks() {
     bookService.query(filterBy).then((books) => {
       setBooks(books)
-      console.log(books)
     })
   }
 
