@@ -25,7 +25,7 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
         <label htmlFor="txt" name="txt">
           Title
         </label>
-        <input onChange={handelChange} value={title} type="text" name="title" />
+        <input onChange={handelChange} value={title} type="text" name="txt" />
 
         <label htmlFor="amount" name="amount">
           amount
