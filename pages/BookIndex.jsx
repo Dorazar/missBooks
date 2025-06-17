@@ -7,7 +7,7 @@ const { useRef, useEffect, useState, Fragment } = React
 
 export function BookIndex() {
   const [books, setBooks] = useState(null)
-  const [selecedtBookId, setSelecedtBookId] = useState('iNJ1Ua')
+  const [selecedtBookId, setSelecedtBookId] = useState(null)
   const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
 
   useEffect(() => {
@@ -16,12 +16,15 @@ export function BookIndex() {
 
   function loadBooks() {
     bookService.query(filterBy).then((books) => {
-      setBooks(books)
+      // if no books, still show the filter cmps
+      if (books.length !== 0) {
+        setBooks(books)
+      }
     })
   }
 
   function onSetFilter(filterBy) {
-    setFilterBy((prevFilter) => ({ ...prevFilter, filterBy }))
+    setFilterBy((prevFilter) => ({ ...prevFilter, ...filterBy }))
   }
 
   function onSelectBook(bookId) {
