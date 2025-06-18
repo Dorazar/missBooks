@@ -71,6 +71,7 @@ export function saveToStorage(key, value) {
 }
 
 export function loadFromStorage(key) {
-  const data = localStorage.getItem(key)
-  return data ? JSON.parse(data) : undefined
+  const json = localStorage.getItem(key)
+  if (!json || json === 'undefined') return null
+  return JSON.parse(json)
 }
