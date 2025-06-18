@@ -1,6 +1,6 @@
-import { bookService } from '../services/book.service.js'
 import { BookFilter } from '../cmps/BookFilter.jsx'
 import { BookList } from '../cmps/BookList.jsx'
+import { bookService } from '../services/book.service.js'
 import { BookDetails } from './BookDetails.jsx'
 
 const { useRef, useEffect, useState, Fragment } = React
@@ -17,9 +17,8 @@ export function BookIndex() {
   function loadBooks() {
     bookService.query(filterBy).then((books) => {
       // if no books, still show the filter cmps
-      if (books.length !== 0) {
-        setBooks(books)
-      }
+
+      setBooks(books)
     })
   }
 
