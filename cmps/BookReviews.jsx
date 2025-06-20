@@ -1,11 +1,6 @@
 const { useRef, useEffect, useState, Fragment } = React
 
-export function BookReviews({ reviews, loadBook }) {
-  
-    useEffect(() => {
-    loadBook()
-  }, [reviews])
-
+export function BookReviews({ reviews }) {
   return (
     <section>
       <ul>

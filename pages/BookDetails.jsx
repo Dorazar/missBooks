@@ -81,9 +81,12 @@ export function BookDetails() {
         <Outlet />
       </section>
       <section>
-        <BookReviews reviews={book.reviews} loadBook={loadBook} />
+        <BookReviews reviews={book.reviews} />
       </section>
       <button onClick={onBack}>back</button>
+
+      {/* לסדר את הרינדור... */}
+      {console.log(1)}
     </section>
   )
 }
