@@ -4,25 +4,28 @@ import { AppHeader } from "./cmps/AppHeader.jsx"
 import { About } from "./pages/About.jsx"
 import { Home } from "./pages/Home.jsx"
 import { BookIndex } from "./pages/BookIndex.jsx"
+import { BookDetails } from './pages/BookDetails.jsx'
+import { BookEdit } from './pages/BookEdit.jsx'
 
 const Router = ReactRouterDOM.HashRouter
+const { Routes, Route } = ReactRouterDOM
 // const Router = ReactRouterDOM.BrowserRouter
 
-
-
 export function RootCmp() {
-
-    const [page, setPage] = useState('book')
-
-    return (
-        <section className="app">
-            <AppHeader onSetPage={(page) => setPage(page)} />
-
-            <main>
-                {page === 'home' && <Home />}
-                {page === 'about' && <About />}
-                {page === 'book' && <BookIndex />}
-            </main>
-        </section>
-    )
+  return (
+    <Router>
+      <section className="app">
+        <AppHeader />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/book" element={<BookIndex />} />
+            <Route path="/book/:bookId" element={<BookDetails />} />
+            <Route path="/book/edit" element={<BookEdit />} />
+          </Routes>
+        </main>
+      </section>
+    </Router>
+  )
 } 
