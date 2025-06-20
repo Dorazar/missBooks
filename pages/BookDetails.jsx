@@ -4,7 +4,7 @@ import { LongTxt } from '../cmps/LongTxt.jsx'
 import { bookService } from '../services/book.service.js'
 const { useRef, useEffect, useState, Fragment } = React
 
-const { useParams, useNavigate } = ReactRouterDOM
+const { useParams, useNavigate, Link, Outlet } = ReactRouterDOM
 
 export function BookDetails() {
   const [book, setBook] = useState(null)
@@ -21,7 +21,7 @@ export function BookDetails() {
       .get(params.bookId)
       .then((book) => {
         setBook(book)
-        console.log(book)
+        // console.log(book)
       })
       .catch((err) => console.log(err))
   }
@@ -70,8 +70,15 @@ export function BookDetails() {
 
       <h5>{`(${getPageCountDesc()})`}</h5>
       <h5>{getBookGen()}</h5>
-
-      <AddReview />
+      <nav>
+        <button>
+          {' '}
+          <Link to={`/book/${params.bookId}/addReview`}>Add review</Link>
+        </button>
+      </nav>
+      <section>
+        <Outlet />
+      </section>
       <button onClick={onBack}>back</button>
     </section>
   )

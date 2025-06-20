@@ -9,8 +9,9 @@ export const bookService = {
   get,
   remove,
   save,
-  // getEmptyBook,
+  getEmptyBook,
   getDefaultFilter,
+  addReview,
 }
 
 function query(filterBy = {}) {
@@ -23,7 +24,6 @@ function query(filterBy = {}) {
       console.log(filterBy.amount)
       books = books.filter((book) => Number(book.listPrice.amount) >= Number(filterBy.amount))
     }
-    console.log(books)
     return books
   })
 }
@@ -45,12 +45,12 @@ function save(book) {
   }
 }
 
-// function getEmptyBook(title = '', listPrice = { amount: '', currencyCode: '', isOnSale: '' }) {
-//   return {
-//     title,
-//     listPrice,
-//   }
-// }
+function getEmptyBook(title = '', listPrice = { amount: '', currencyCode: '', isOnSale: '' }) {
+  return {
+    title,
+    listPrice,
+  }
+}
 
 function getDefaultFilter() {
   return { txt: '', amount: 0 }
@@ -78,6 +78,7 @@ function _createBooks() {
           currencyCode: 'EUR',
           isOnSale: Math.random() > 0.7,
         },
+        reviews: [],
       }
       books.push(book)
     }
@@ -85,8 +86,15 @@ function _createBooks() {
   }
 }
 
-// function _createBook(title, listPrice) {
-//   const book = getEmptyBook(title, listPrice)
-//   book.id = makeId()
-//   return book
-// }
+function _createBook(title, listPrice) {
+  const book = getEmptyBook(title, listPrice)
+  book.id = makeId()
+  return book
+}
+
+function addReview(bookId, review) {
+  return get(bookId).then((book) => {
+    book.reviews.push(review)
+    save(book)
+  })
+}
