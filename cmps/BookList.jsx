@@ -3,7 +3,7 @@ import { BookPreview } from './BookPreview.jsx'
 
 const { Link } = ReactRouterDOM
 
-export function BookList({ books, onSelectBook }) {
+export function BookList({ books }) {
   return (
     <article>
       <ul className="book-list">
