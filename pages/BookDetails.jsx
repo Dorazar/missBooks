@@ -1,3 +1,5 @@
+import { AddReview } from '../cmps/AddReview.jsx'
+import { BookPreview } from '../cmps/BookPreview.jsx'
 import { LongTxt } from '../cmps/LongTxt.jsx'
 import { bookService } from '../services/book.service.js'
 const { useRef, useEffect, useState, Fragment } = React
@@ -26,7 +28,7 @@ export function BookDetails() {
 
   function getPageCountDesc() {
     if (book.pageCount >= 500) return 'Serious Reading'
-    if (book.pageCount >= 200 && book.pageCount < 500) return 'Descent Reading'
+    if (book.pageCount >= 100 && book.pageCount < 500) return 'Descent Reading'
     if (book.pageCount < 100) return 'Light Reading'
   }
 
@@ -54,7 +56,6 @@ export function BookDetails() {
       <h1>{book.title}</h1>
       <h2>{book.authors}</h2>
       <h5>
-        {' '}
         <LongTxt txt={book.description} />
       </h5>
 
@@ -69,6 +70,8 @@ export function BookDetails() {
 
       <h5>{`(${getPageCountDesc()})`}</h5>
       <h5>{getBookGen()}</h5>
+
+      <AddReview />
       <button onClick={onBack}>back</button>
     </section>
   )
