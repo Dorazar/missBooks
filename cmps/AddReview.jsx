@@ -1,10 +1,11 @@
 import { bookService } from '../services/book.service.js'
+import { utilService } from '../services/util.service.js'
 
 const { useRef, useEffect, useState, Fragment } = React
 const { useParams, useNavigate } = ReactRouterDOM
 
 export function AddReview() {
-  let [review, setReview] = useState({ fullName: '', rating: '', readAt: '' })
+  let [review, setReview] = useState({ id: '', fullName: '', rating: '', readAt: '' })
 
   const fullNameRef = useRef(null)
   const ratingRef = useRef(null)
@@ -13,6 +14,7 @@ export function AddReview() {
   const params = useParams()
 
   const navigate = useNavigate()
+
   //   useEffect(() => {
   //     closeReview()
   //   }, [review])
@@ -20,14 +22,14 @@ export function AddReview() {
   function onSubmit(ev) {
     ev.preventDefault()
     review = {
+      id: utilService.makeId(),
       fullName: fullNameRef.current.value,
       rating: ratingRef.current.value,
       readAt: readAtRef.current.value,
     }
     console.log(review)
     setReview(review)
-    bookService.addReview(params.bookId, review)
-    closeReview()
+    bookService.addReview(params.bookId, review).then(closeReview)
   }
 
   function closeReview() {
@@ -54,6 +56,9 @@ export function AddReview() {
         <input ref={readAtRef} defaultValue={new Date().toISOString().split('T')[0]} type="date" name="readAt" />
 
         <button>Add</button>
+        <button type="button" onClick={closeReview}>
+          Close
+        </button>
       </form>
     </section>
   )

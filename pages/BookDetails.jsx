@@ -1,5 +1,6 @@
 import { AddReview } from '../cmps/AddReview.jsx'
 import { BookPreview } from '../cmps/BookPreview.jsx'
+import { BookReviews } from '../cmps/BookReviews.jsx'
 import { LongTxt } from '../cmps/LongTxt.jsx'
 import { bookService } from '../services/book.service.js'
 const { useRef, useEffect, useState, Fragment } = React
@@ -78,6 +79,9 @@ export function BookDetails() {
       </nav>
       <section>
         <Outlet />
+      </section>
+      <section>
+        <BookReviews reviews={book.reviews} loadBook={loadBook} />
       </section>
       <button onClick={onBack}>back</button>
     </section>
