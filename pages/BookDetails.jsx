@@ -13,6 +13,12 @@ export function BookDetails() {
   const params = useParams()
   const navigate = useNavigate()
 
+  function onAddReview() {
+    loadBook()
+  }
+
+  console.log(book)
+
   useEffect(() => {
     loadBook()
   }, [])
@@ -50,6 +56,12 @@ export function BookDetails() {
     navigate('/book')
   }
 
+  function onDeleteReview(reviewId) {
+    let reviewIdx = book.reviews.findIndex((review) => review.id === reviewId)
+    book.reviews.splice(reviewIdx, 1)
+    bookService.save(book).then(() => loadBook())
+  }
+
   if (!book) return <div>Loading...</div>
 
   return (
@@ -73,15 +85,14 @@ export function BookDetails() {
       <h5>{getBookGen()}</h5>
       <nav>
         <button>
-          {' '}
           <Link to={`/book/${params.bookId}/addReview`}>Add review</Link>
         </button>
       </nav>
       <section>
-        <Outlet />
+        <Outlet context={{ onAddReview }} />
       </section>
       <section>
-        <BookReviews reviews={book.reviews} />
+        <BookReviews reviews={book.reviews} onDeleteReview={onDeleteReview} />
       </section>
       <button onClick={onBack}>back</button>
 

@@ -95,6 +95,6 @@ function _createBook(title, listPrice) {
 function addReview(bookId, review) {
   return get(bookId).then((book) => {
     book.reviews.push(review)
-    save(book)
+    return save(book)
   })
 }

@@ -2,11 +2,9 @@ import { bookService } from '../services/book.service.js'
 import { utilService } from '../services/util.service.js'
 
 const { useRef, useEffect, useState, Fragment } = React
-const { useParams, useNavigate } = ReactRouterDOM
+const { useParams, useNavigate, useOutletContext } = ReactRouterDOM
 
 export function AddReview() {
-  let [review, setReview] = useState({ id: '', fullName: '', rating: '', readAt: '' })
-
   const fullNameRef = useRef(null)
   const ratingRef = useRef(null)
   const readAtRef = useRef(null)
@@ -15,21 +13,20 @@ export function AddReview() {
 
   const navigate = useNavigate()
 
-  //   useEffect(() => {
-  //     closeReview()
-  //   }, [review])
+  const { onAddReview } = useOutletContext()
 
   function onSubmit(ev) {
     ev.preventDefault()
-    review = {
+    const review = {
       id: utilService.makeId(),
       fullName: fullNameRef.current.value,
       rating: ratingRef.current.value,
       readAt: readAtRef.current.value,
     }
-    console.log(review)
-    setReview(review)
-    bookService.addReview(params.bookId, review).then(closeReview)
+    bookService.addReview(params.bookId, review).then(() => {
+      onAddReview()
+      closeReview()
+    })
   }
 
   function closeReview() {
