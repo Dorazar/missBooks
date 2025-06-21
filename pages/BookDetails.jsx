@@ -21,14 +21,14 @@ export function BookDetails() {
 
   useEffect(() => {
     loadBook()
-  }, [])
+  }, [params.bookId])
 
   function loadBook() {
     bookService
       .get(params.bookId)
       .then((book) => {
         setBook(book)
-        // console.log(book)
+        console.log(book)
       })
       .catch((err) => console.log(err))
   }
@@ -94,9 +94,17 @@ export function BookDetails() {
       <section>
         <BookReviews reviews={book.reviews} onDeleteReview={onDeleteReview} />
       </section>
+
+      <section>
+        <button>
+          <Link to={`/book/${book.prevBookId}`}>Prev book</Link>
+        </button>
+        <button>
+          <Link to={`/book/${book.nextBookId}`}>Next book</Link>
+        </button>
+      </section>
       <button onClick={onBack}>back</button>
 
-      {/* לסדר את הרינדור... */}
       {console.log(1)}
     </section>
   )

@@ -12,6 +12,7 @@ export function BookIndex() {
 
   useEffect(() => {
     loadBooks()
+
   }, [filterBy])
 
   function loadBooks() {
