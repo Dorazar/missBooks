@@ -31,7 +31,7 @@ export function BookIndex() {
     setSelecedtBookId(bookId)
   }
 
-  if (!books || books.length === 0) return <div>Loading...</div>
+  if (!books || books.length === 0) return <div>Loading..</div>
 
   return (
     <section>
