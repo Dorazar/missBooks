@@ -4,8 +4,8 @@ export function BookPreview({ book }) {
       <h4>{book.title}</h4>
 
       <img src={book.thumbnail} alt="" />
-      {book.listPrice.amount}
-      {book.listPrice.currencyCode}
+      {/* {book.listPrice.amount} */}
+      {/* {book.listPrice.currencyCode} */}
     </article>
   )
 }

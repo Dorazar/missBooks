@@ -23,8 +23,10 @@ function query(filterBy = {}) {
     }
     if (filterBy.amount) {
       console.log(filterBy.amount)
-      books = books.filter((book) => Number(book.listPrice.amount) >= Number(filterBy.amount))
+      books = books.filter((book) => book.listPrice.amount >= filterBy.amount)
     }
+
+    console.log(books)
     return books
   })
 }
@@ -56,7 +58,7 @@ function getEmptyBook(title = '', listPrice = { amount: '', currencyCode: '', is
 }
 
 function getDefaultFilter() {
-  return { txt: '', amount: 0 }
+  return { txt: '', amount: '' }
 }
 
 function _createBooks() {

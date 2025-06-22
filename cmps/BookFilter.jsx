@@ -11,10 +11,21 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
 
   function handelChange({ target }) {
     const field = target.name
-    const value = target.value
+    let value = target.value
+
+    switch (target.type) {
+      case 'number':
+        value = +value
+        break
+      case 'checkbox':
+        value = value.checked
+
+      default:
+        break
+    }
 
     setFilterByToEdit((prvFilter) => ({ ...prvFilter, [field]: value }))
-    console.log(target.name, target.value)
+    
   }
 
   // console.log(filterByToEdit)
