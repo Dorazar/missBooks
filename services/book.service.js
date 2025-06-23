@@ -11,7 +11,7 @@ export const bookService = {
   save,
   getEmptyBook,
   getDefaultFilter,
-  addReview,
+  saveReview,
   _setNextPrevBookId,
   getEmptyReview,
 }
@@ -98,9 +98,11 @@ function _createBook(title, listPrice) {
   return book
 }
 
-function addReview(bookId, review) {
+function saveReview(bookId, review) {
   return get(bookId).then((book) => {
+    review.id = utilService.makeId()
     book.reviews.push(review)
+    console.log(review)
     return save(book)
   })
 }
@@ -117,5 +119,5 @@ function _setNextPrevBookId(book) {
 }
 
 function getEmptyReview() {
-  return { name: '', rating: '', readAt: '' }
+  return { fullname: '', rating: '3', readAt: new Date().toISOString().split('T')[0] }
 }

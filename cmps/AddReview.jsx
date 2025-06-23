@@ -4,18 +4,33 @@ import { utilService } from '../services/util.service.js'
 const { useRef, useEffect, useState, Fragment } = React
 const { useParams, useNavigate } = ReactRouterDOM
 
-export function AddReview() {
+export function AddReview({ onReview }) {
   const params = useParams()
+
+  const [review, setReview] = useState(bookService.getEmptyReview())
 
   const navigate = useNavigate()
 
-  function onSubmit(ev) {
+  function handleChange({ target }) {
+    const feild = target.name
+    const value = target.value
+
+    switch (target.type) {
+      case 'number':
+        value = +value
+        break
+
+      case 'checkbox':
+        value = target.chcked
+        break
+    }
+
+    setReview((prevReview) => ({ ...prevReview, [feild]: value }))
+  }
+
+  function onAddReview(ev) {
     ev.preventDefault()
-    const review = bookService.getEmptyReview()
-    console.log(review)
-
-
-    
+    bookService.saveReview(params.bookId, review).then(onReview)
   }
 
   function closeReview() {
@@ -25,12 +40,12 @@ export function AddReview() {
   return (
     <section>
       <h1>Add review</h1>
-      <form onSubmit={onSubmit}>
+      <form>
         <label htmlFor="fullname">Name</label>
-        <input type="text" name="fullname" />
+        <input onChange={handleChange} value={review.fullname} type="text" name="fullname" />
 
         <label htmlFor="rating">Rating</label>
-        <select defaultValue={'5'} name="rating" type="number">
+        <select onChange={handleChange} value={review.rating} name="rating" type="number">
           <option value="1">⭐</option>
           <option value="2">⭐⭐</option>
           <option value="3">⭐⭐⭐</option>
@@ -39,9 +54,8 @@ export function AddReview() {
         </select>
 
         <label htmlFor="readAt">Date</label>
-        <input defaultValue={new Date().toISOString().split('T')[0]} type="date" name="readAt" />
-
-        <button>Add</button>
+        <input onChange={handleChange} value={review.readAt} type="date" name="readAt" />
+        <button onClick={onAddReview}>Add</button>
       </form>
     </section>
   )

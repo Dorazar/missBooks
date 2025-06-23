@@ -13,11 +13,9 @@ export function BookDetails() {
   const params = useParams()
   const navigate = useNavigate()
 
-  function onAddReview() {
-    loadBook()
+  function onReview(book) {
+    setBook(book)
   }
-
-  console.log(book)
 
   useEffect(() => {
     loadBook()
@@ -28,7 +26,6 @@ export function BookDetails() {
       .get(params.bookId)
       .then((book) => {
         setBook(book)
-        console.log(book)
       })
       .catch((err) => console.log(err))
   }
@@ -83,17 +80,9 @@ export function BookDetails() {
 
       <h5>{`(${getPageCountDesc()})`}</h5>
       <h5>{getBookGen()}</h5>
-      <nav>
-        <button>
-          <Link to={`/book/${params.bookId}/addReview`}>Add review</Link>
-        </button>
-      </nav>
-      <section>
-        <Outlet context={{ onAddReview }} />
-      </section>
 
       <section>
-        <AddReview />
+        <AddReview onReview={onReview} />
       </section>
 
       <section>
@@ -109,8 +98,6 @@ export function BookDetails() {
         </button>
       </section>
       <button onClick={onBack}>back</button>
-
-      {console.log(1)}
     </section>
   )
 }

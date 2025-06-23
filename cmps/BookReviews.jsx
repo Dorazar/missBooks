@@ -1,12 +1,14 @@
 const { useRef, useEffect, useState, Fragment } = React
 
 export function BookReviews({ reviews, onDeleteReview }) {
+
+  console.log(reviews)
   return (
     <section>
       <ul>
         {reviews.map((review) => (
           <li key={review.id}>
-            {review.fullName} {review.rating} {review.readAt}
+            {review.fullname} {review.rating} {review.readAt}
             <button onClick={() => onDeleteReview(`${review.id}`)}>Delete</button>
           </li>
         ))}
