@@ -91,6 +91,11 @@ export function BookDetails() {
       <section>
         <Outlet context={{ onAddReview }} />
       </section>
+
+      <section>
+        <AddReview />
+      </section>
+
       <section>
         <BookReviews reviews={book.reviews} onDeleteReview={onDeleteReview} />
       </section>

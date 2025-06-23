@@ -13,6 +13,7 @@ export const bookService = {
   getDefaultFilter,
   addReview,
   _setNextPrevBookId,
+  getEmptyReview,
 }
 
 function query(filterBy = {}) {
@@ -113,4 +114,8 @@ function _setNextPrevBookId(book) {
     book.prevBookId = prevBook.id
     return book
   })
+}
+
+function getEmptyReview() {
+  return { name: '', rating: '', readAt: '' }
 }
