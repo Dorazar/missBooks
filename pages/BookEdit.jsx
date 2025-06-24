@@ -9,10 +9,23 @@ const { useParams, useNavigate, Link, Outlet } = ReactRouterDOM
 
 export function BookEdit() {
   const [bookToEdit, setBookToEdit] = useState(bookService.getEmptyBook())
-
+  const { bookId } = useParams()
   const { title, listPrice } = bookToEdit
-
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (bookId) {
+      loadBook(bookId)
+    }
+  }, [])
+
+  function loadBook(bookId) {
+    bookService
+      .get(bookId)
+      .then(setBookToEdit)
+      .catch((err) => console.log('Cannot get book:', err))
+  }
+
   function onSaveBook(ev) {
     ev.preventDefault()
     bookService
@@ -48,7 +61,7 @@ export function BookEdit() {
 
   return (
     <section>
-      <h1>Add Book</h1>
+      <h1>{bookId ? 'Edit ' : 'Add '}Book</h1>
       <form onSubmit={onSaveBook}>
         <label htmlFor="title">Title</label>
         <input onChange={handleChange} value={title} type="text" name="title" />
