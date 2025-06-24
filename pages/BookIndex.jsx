@@ -44,6 +44,9 @@ export function BookIndex() {
           <Link to="/book/edit">
             <button>Add</button>
           </Link>
+          <Link to="/book/AddGoogleBook">
+            <button>Add Google Book</button>
+          </Link>
           <BookFilter defaultFilter={filterBy} onSetFilter={onSetFilter} />
           <BookList books={books} onSelectBook={onSelectBook} />
         </section>
