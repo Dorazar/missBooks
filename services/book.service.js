@@ -51,10 +51,26 @@ function save(book) {
   }
 }
 
-function getEmptyBook(title = '', listPrice = { amount: '', currencyCode: '', isOnSale: '' }) {
+
+
+function getEmptyBook() {
+  const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
   return {
-    title,
-    listPrice,
+    title: '',
+    subtitle: utilService.makeLorem(4),
+    authors: [utilService.makeLorem(1)],
+    publishedDate: utilService.getRandomIntInclusive(1950, 2024),
+    description: utilService.makeLorem(20),
+    pageCount: utilService.getRandomIntInclusive(20, 600),
+    categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
+    thumbnail: '',
+    language: 'en',
+    listPrice: {
+      amount: '',
+      currencyCode: 'EUR',
+      isOnSale: Math.random() > 0.7,
+    },
+    reviews: [],
   }
 }
 

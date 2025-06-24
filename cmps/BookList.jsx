@@ -13,7 +13,6 @@ export function BookList({ books }) {
             {/* prettier-ignore */}
             <button>
               <Link to={`/book/${book.id}`}>Details</Link>
-             
             </button>
           </li>
         ))}
