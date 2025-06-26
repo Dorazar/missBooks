@@ -1,8 +1,11 @@
 const { useRef, useEffect, useState, Fragment } = React
 
+import { showSuccessMsg } from '../services/event-bus.service.js'
+import { bookService } from '../services/book.service.js'
+
 const { useParams, useNavigate, Link, Outlet } = ReactRouterDOM
 
-import { bookService } from '../services/book.service.js'
+
 
 export function AddGoogleBook() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -30,8 +33,18 @@ export function AddGoogleBook() {
   //   const gData =  bookService.getGoogledata().items
 
   function onBookChoose(book) {
+    console.log(book)
     bookService.onAddGoogleBook(book).then((book) => bookService.save(book))
   }
+
+function onSelectBook({target}) {
+  const bookId =target.value
+  
+ const bookToMod =  gData.find(book => book.id===bookId)
+ const {id, ...book} = bookService.onAddGoogleBook(bookToMod).then(book =>save(book)).
+ then(showSuccessMsg('Google Book Added!'))
+}
+
 
   console.log(gData)
   return (
@@ -45,22 +58,38 @@ export function AddGoogleBook() {
         </button>
       </section>
 
-      {gData && (
-        <ul>
-          {gData.map((book) => (
-            <li key={book.id}>
-              {book.volumeInfo.title}
-              <button
-                onClick={() => {
-                  onBookChoose(book)
-                }}
-              >
-                +
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      <section>
+    
+        {gData && (
+          <ul>
+            {gData.map((book) => (
+              <li key={book.id}>
+                {book.volumeInfo.title}
+                <button
+                  onClick={() => {
+                    onBookChoose(book)
+                  }}
+                >
+                  +
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section>
+        <label htmlFor="book-select">Choose a book:</label>
+        {gData && (
+
+          <select onChange={onSelectBook} name="book-select">
+            <option value=""></option>
+            {gData.map((book) => 
+            (<option value={book.id} key={book.id}>{book.volumeInfo.title}</option>
+            ))}
+          </select>
+        )}
+      </section>
     </section>
   )
 }
