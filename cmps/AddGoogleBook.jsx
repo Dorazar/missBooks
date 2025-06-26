@@ -2,6 +2,7 @@ const { useRef, useEffect, useState, Fragment } = React
 
 import { showSuccessMsg } from '../services/event-bus.service.js'
 import { bookService } from '../services/book.service.js'
+import { utilService } from '../services/util.service.js'
 
 const { useParams, useNavigate, Link, Outlet } = ReactRouterDOM
 
@@ -9,8 +10,17 @@ const { useParams, useNavigate, Link, Outlet } = ReactRouterDOM
 
 export function AddGoogleBook() {
   const [searchTerm, setSearchTerm] = useState('')
+  const [gData, setGdata] = useState('')
 
-  const [gData, setGdata] = useState(searchTerm)
+
+  const onSetSearchByDebounce = useRef(utilService.debounce(onSearchBook,1000)).current
+
+
+  useEffect(()=>{
+    onSetSearchByDebounce(searchTerm)
+  },[searchTerm])
+  
+
 
   function onSearchBook(searchTerm) {
     bookService.getGoogledata(searchTerm).then((books) => setGdata(books.items))
@@ -46,16 +56,18 @@ function onSelectBook({target}) {
 }
 
 
-  console.log(gData)
+ if (gData) console.log(gData)
   return (
     <section>
       <section>
         <h1>Add a google book</h1>
+        <form onChange={()=>onSetSearchByDebounce(searchTerm)}>
         <label htmlFor="searchTerm">Book Name</label>
         <input value={searchTerm} onChange={handleChange} type="text" name="searchTerm" />
-        <button type="button" onClick={() => onSearchBook(searchTerm)}>
+        {/* <button type="button" onClick={() => onSearchBook(searchTerm)}>
           Search
-        </button>
+        </button> */}
+        </form>
       </section>
 
       <section>
@@ -82,7 +94,7 @@ function onSelectBook({target}) {
         <label htmlFor="book-select">Choose a book:</label>
         {gData && (
 
-          <select onChange={onSelectBook} name="book-select">
+          <select onChange={()=>onSelectBook(ev)} name="book-select">
             <option value=""></option>
             {gData.map((book) => 
             (<option value={book.id} key={book.id}>{book.volumeInfo.title}</option>

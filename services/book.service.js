@@ -140,6 +140,8 @@ function getEmptyReview() {
 }
 
 function getGoogledata(searchBy) {
+   if (!searchBy || !searchBy.trim()) return Promise.resolve([])
+   console.log('hi')
   // return Promise.resolve({
   //   kind: 'books#volumes',
   //   totalItems: 1000000,
@@ -886,8 +888,10 @@ function getGoogledata(searchBy) {
   //     },
   //   ],
   // })
+ 
   // const search = 'harry potrer'
   return fetch(`https://www.googleapis.com/books/v1/volumes?printType=books&q=${searchBy}`).then((res) => res.json())
+ 
 }
 
 function onAddGoogleBook(gBook) {

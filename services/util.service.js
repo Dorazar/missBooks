@@ -4,6 +4,9 @@ export const utilService = {
   getRandomIntInclusive,
   saveToStorage,
   loadFromStorage,
+  debounce,
+  animateCSS
+
 }
 
 export function makeId(length = 6) {
@@ -75,4 +78,31 @@ export function loadFromStorage(key) {
   const json = localStorage.getItem(key)
   if (!json || json === 'undefined') return null
   return JSON.parse(json)
+}
+
+export function animateCSS(el, animation = 'bounce', isRemoveClass = true) {
+    const prefix = 'animate__'
+    return new Promise((resolve, reject) => {
+        const animationName = `${prefix}${animation}`
+        el.classList.add(`${prefix}animated`, animationName)
+
+        function handleAnimationEnd(ev) {
+            ev.stopPropagation()
+            if (isRemoveClass) el.classList.remove(`${prefix}animated`, animationName)
+            resolve('Animation ended')
+        }
+
+        el.addEventListener('animationend', handleAnimationEnd, { once: true })
+    })
+}
+
+
+export function debounce(func, delay) {
+    let timeoutId
+    return (...args) => {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            func(...args)
+        }, delay)
+    }
 }
