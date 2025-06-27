@@ -2,7 +2,7 @@ const { useRef, useEffect, useState, Fragment } = React
 
 export function BookReviews({ reviews, onDeleteReview }) {
 
-  console.log(reviews)
+
   return (
     <section>
       <ul>

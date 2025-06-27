@@ -1,5 +1,9 @@
 import { bookService } from '../services/book.service.js'
 import { utilService } from '../services/util.service.js'
+import { RateBySelect } from './RateBySelect.jsx'
+import { RateByStars } from './RateByStars.jsx'
+import { RateByTextBox } from './RateByTextBox.jsx'
+
 
 const { useRef, useEffect, useState, Fragment } = React
 const { useParams, useNavigate } = ReactRouterDOM
@@ -8,6 +12,8 @@ export function AddReview({ onReview }) {
   const params = useParams()
 
   const [review, setReview] = useState(bookService.getEmptyReview())
+  const [cmpType,setCmpType] = useState('')
+
 
   const navigate = useNavigate()
 
@@ -37,7 +43,43 @@ export function AddReview({ onReview }) {
     navigate(`/book/${params.bookId}`)
   }
 
-  return (
+  function onChooseRatingWay({target}) {
+    const value = target.value
+   
+    console.log(target)
+    setCmpType(value)
+
+  }
+
+
+  function onAddVal(feild,value) {
+    setReview(prevReview => ({...prevReview,[feild]:value}))
+  }
+
+  console.log(review)
+    return (
+<section>
+  <section>
+    <fieldset onChange={(ev)=>onChooseRatingWay(ev)}>
+  <legend>Select rating book way:</legend>
+
+  <div>
+    <input type="radio"  name="rating" value="Select" />
+    <label htmlFor="Select">Select</label>
+  </div>
+
+  <div>
+    <input type="radio" name="rating" value="Textbox" />
+    <label htmlFor="Textbox">Textbox</label>
+  </div>
+
+  <div>
+    <input type="radio" name="rating" value="Stars" />
+    <label htmlFor="Stars">Stars</label>
+  </div>
+</fieldset>
+    <DynamicCmp cmpType={cmpType} onAddVal={onAddVal} onAddReview={onAddReview} />
+  </section>
     <section>
       <h1>Add review</h1>
       <form>
@@ -58,5 +100,20 @@ export function AddReview({ onReview }) {
         <button onClick={onAddReview}>Add</button>
       </form>
     </section>
+    </section>
   )
+
 }
+
+
+
+ function DynamicCmp(props) {
+  switch (props.cmpType) {
+    case 'Select':
+    return <RateBySelect {...props}/>
+    case 'Textbox':
+    return <RateByTextBox {...props}/>
+    case 'Stars':
+    return <RateByStars {...props}/>
+  }
+  }
