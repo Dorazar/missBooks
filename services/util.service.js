@@ -5,8 +5,8 @@ export const utilService = {
   saveToStorage,
   loadFromStorage,
   debounce,
-  animateCSS
-
+  animateCSS,
+getTruthyValues
 }
 
 export function makeId(length = 6) {
@@ -105,4 +105,15 @@ export function debounce(func, delay) {
             func(...args)
         }, delay)
     }
+}
+
+export function getTruthyValues(obj) {
+    const newObj = {}
+    for (const key in obj) {
+        const value = obj[key]
+        if (value) {
+            newObj[key] = value
+        }
+    }
+    return newObj
 }

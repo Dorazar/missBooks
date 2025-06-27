@@ -17,6 +17,7 @@ export const bookService = {
   getGoogledata,
   onAddGoogleBook,
   isBookInStorage,
+  getFilterFromSearchParams
 }
 
 function query(filterBy = {}) {
@@ -26,6 +27,7 @@ function query(filterBy = {}) {
       books = books.filter((book) => regExp.test(book.title) || regExp.test(book.description))
     }
     if (filterBy.amount) {
+    
       console.log(filterBy.amount)
       books = books.filter((book) => book.listPrice.amount >= filterBy.amount)
     }
@@ -924,3 +926,11 @@ function isBookInStorage(checkBook) {
 }
 
 
+function getFilterFromSearchParams(searchParams) {
+    const txt = searchParams.get('txt') || ''
+    const amount = searchParams.get('amount') || ''
+    return {
+        txt,
+        amount
+    }
+}

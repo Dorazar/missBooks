@@ -5,6 +5,8 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
 
   const { title, amount } = defaultFilter
 
+  
+
   useEffect(() => {
     onSetFilter(filterByToEdit)
   }, [filterByToEdit])
@@ -23,6 +25,8 @@ export function BookFilter({ defaultFilter, onSetFilter }) {
       default:
         break
     }
+
+    if (value===0) value=''
 
     setFilterByToEdit((prvFilter) => ({ ...prvFilter, [field]: value }))
     

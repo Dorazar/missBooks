@@ -6,14 +6,19 @@ import { BookEdit } from './BookEdit.jsx'
 
 const { useRef, useEffect, useState, Fragment } = React
 
-const { useParams, useNavigate, Link, Outlet } = ReactRouterDOM
+const { useParams, useNavigate, Link, Outlet ,useSearchParams} = ReactRouterDOM
 
 export function BookIndex() {
+
+
   const [books, setBooks] = useState(null)
   const [selecedtBookId, setSelecedtBookId] = useState(null)
-  const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
+  const [searchParams,setSearchParams]=useSearchParams()
+
+  const [filterBy, setFilterBy] = useState(bookService.getFilterFromSearchParams(searchParams))
 
   useEffect(() => {
+    setSearchParams(filterBy)
     loadBooks()
   }, [filterBy])
 
@@ -33,7 +38,8 @@ export function BookIndex() {
     setSelecedtBookId(bookId)
   }
 
-  if (!books || books.length === 0) return <div>Loading..</div>
+  if (!books ) return <div> Loading..</div>
+
 
   return (
     <section>
@@ -49,6 +55,11 @@ export function BookIndex() {
           </Link>
           <BookFilter defaultFilter={filterBy} onSetFilter={onSetFilter} />
           <BookList books={books} onSelectBook={onSelectBook} />
+        </section>
+      )}
+       {!selecedtBookId & books.length===0 && (
+        <section>
+          No books were found...
         </section>
       )}
     </section>
